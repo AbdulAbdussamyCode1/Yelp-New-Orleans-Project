@@ -1,0 +1,62 @@
+---
+title: "New Orleans Restaurant Analysis"
+author: "Abdulwahab Abdussamy"
+format: html
+---
+
+## Region choice
+
+I am studying restaurants in New Orleans using Cajun/Creole, seafood, and Southern restaurants. I chose these categories because they are closely connected to New Orleans food culture and provide enough restaurants for meaningful geographic comparisons.
+
+I compare ZIP Code Tabulation Areas with Census tracts because these geographic systems divide the city differently. This allows me to see how the choice of geographic boundaries affects the analysis.
+
+## Load and analyze the data
+
+```{r}
+source("analysis_steps.R")
+```
+
+## Restaurant category summary
+
+```{r}
+category_summary
+```
+
+## Geographic comparison
+
+```{r}
+geography_summary
+```
+
+## Map of selected restaurants
+
+```{r}
+ggplot() +
+  geom_sf(
+    data = la_places |> st_transform(4326),
+    fill = "gray95",
+    color = "gray50"
+  ) +
+  geom_sf(
+    data = restaurant_points,
+    aes(color = stars),
+    alpha = 0.6,
+    size = 1
+  ) +
+  scale_color_viridis_c(name = "Yelp rating") +
+  labs(
+    title = "Selected Restaurants in New Orleans",
+    subtitle = "Cajun, Creole, Seafood, and Southern restaurants"
+  ) +
+  theme_minimal()
+```
+
+## Census tract map
+
+```{r}
+tract_map
+```
+
+## Conclusion
+
+The selected restaurants are concentrated throughout New Orleans rather than being located in only one neighborhood. The comparison shows that ZIP Code Tabulation Areas and Census tracts create different geographic groupings. I chose Census tracts as my primary geographic system because they provide smaller and more detailed areas for comparing restaurant locations and ratings.
